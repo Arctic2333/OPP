@@ -1,10 +1,3 @@
-/*
- * @Author: Susongfeng
- * @Date: 2020-06-18 14:14:35
- * @Last Modified by:   Susongfeng
- * @Last Modified time: 2020-06-18 14:14:35
- */
-
 #ifndef MODEL_H
 #define MODEL_H
 class model {
