@@ -1,0 +1,13 @@
+{
+  "files.associations": {
+    "*.asm": "asm",
+    "cmath": "cpp",
+    "iostream": "cpp",
+    "complex": "cpp"
+  },
+  "cSpell.words": [
+    "susongfeng",
+    "yizhong"
+  ],
+  "C_Cpp.errorSquiggles": "Enabled"
+}
