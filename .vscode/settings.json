@@ -4,7 +4,8 @@
     "cmath": "cpp",
     "iostream": "cpp",
     "complex": "cpp",
-    "*.tcc": "cpp"
+    "*.tcc": "cpp",
+    "ostream": "cpp"
   },
   "cSpell.words": [
     "susongfeng",

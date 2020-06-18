@@ -24,6 +24,7 @@ class household : public model {
   void addSelf(admin& b);  // 用户自己登记信息
 };
 void household::search() {
+  cout << this->getName() << ",您好!" << endl;
   if (this->getState() == 1) {
     cout << "您没有出外省和高风险地区记录不需要隔离" << endl;
   } else {
@@ -58,15 +59,14 @@ class admin : public model {
 };
 void admin::search() {
   if (this->getState() == 1) {
-    cout << "您没有出外省和高风险地区记录不需要隔离" << endl;
+    cout << "管理员,您没有出外省和高风险地区记录不需要隔离" << endl;
   } else {
-    cout << "注意！！！您有出外省和高风险地区记录需要隔离" << endl;
+    cout << "注意！！！管理员，您有出外省和高风险地区记录需要隔离" << endl;
   }
 }
 void admin::search(int a) {
   for (i = li.begin(); i != li.end(); ++i) {
     if (i->getID() == a) {
-      cout << i->getName() << endl;
       i->search();
     }
   }
@@ -74,7 +74,14 @@ void admin::search(int a) {
 void admin::searchAll() {
   cout << "当前登记的住户有：" << endl;
   for (i = li.begin(); i != li.end(); ++i) {
-    cout << i->getName() << endl;
+    cout << "id: " << i->getID() << "  年龄：" << i->getAge() << "  姓名："
+         << i->getName() << "  性别：" << i->getGender() << "  住址："
+         << i->getAddress();
+    if (i->getState() == 1) {
+      cout << "  状态：健康" << endl;
+    } else {
+      cout << "  状态：隔离" << endl;
+    }
   }
   HouseholdNum = li.size();
   cout << "当前登记住户共有" << HouseholdNum << "人" << endl;
@@ -84,7 +91,9 @@ void admin::searchQuarantine() {
   cout << "正在隔离的人员：" << endl;
   for (i = li.begin(); i != li.end(); ++i) {
     if (i->getState() != 1) {
-      cout << i->getName() << endl;
+      cout << "id: " << i->getID() << "  年龄：" << i->getAge() << "  姓名："
+           << i->getName() << "  性别：" << i->getGender() << "  住址："
+           << i->getAddress() << endl;
       QuarantineNum++;
     }
   }
@@ -104,7 +113,7 @@ void admin::deleteHousehold(int a) {
   if (flag == 1) {
     cout << "删除id为" << a << "的住户成功！" << endl;
   } else {
-    cout << "删除失败，未找到住户" << endl;
+    cout << "删除失败，未找id为"<< a <<"的住户！！！" << endl;
   }
 }
 void admin::editHousehold(int a, household b) {
