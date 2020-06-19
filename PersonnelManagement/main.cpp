@@ -8,7 +8,7 @@ int c, flag = 0, t, id = 1001, age, state = 1;
 char *name = (char *)malloc(20);
 char *address = (char *)malloc(200);
 char *gender = (char *)malloc(8);
-void readUserInformation() {
+void readUserInformation() {  // 读入输入的信息
   cout << "请依次输入id，年龄，姓名，性别，地址(!:"
           "请输入完一项回车换行输入下一项)"
        << endl;
@@ -59,11 +59,13 @@ int main() {
     ui.adminUI();
     cin >> c;
     if (c == 1) {
+      //====================管理员功能1界面
       ui.adminUI_1();
       ad.search();
       system("pause");
       exit(0);
     } else if (c == 2) {
+      //====================管理员功能2界面
       ui.adminUI_2();
       cout << "请输入住户id：" << endl;
       cin >> t;
@@ -72,16 +74,19 @@ int main() {
       system("pause");
       exit(0);
     } else if (c == 3) {
+      //====================管理员功能3界面
       ui.adminUI_3();
       ad.searchAll();
       system("pause");
       exit(0);
     } else if (c == 4) {
+      //====================管理员功能4界面
       ui.adminUI_4();
       ad.searchQuarantine();
       system("pause");
       exit(0);
     } else if (c == 5) {
+      //====================管理员功能5界面
       ui.adminUI_5();
       readUserInformation();
       ad.judgeReID(id);
@@ -91,6 +96,7 @@ int main() {
       system("pause");
       exit(0);
     } else if (c == 6) {
+      //====================管理员功能6界面
       ui.adminUI_6();
       cout << "请输入用户id：" << endl;
       cin >> t;
@@ -100,6 +106,7 @@ int main() {
       system("pause");
       exit(0);
     } else if (c == 7) {
+      //====================管理员功能7界面
       ui.adminUI_7();
       cout << "请输入用户id：" << endl;
       cin >> t;
@@ -112,9 +119,10 @@ int main() {
       system("pause");
       exit(0);
     } else {
+      //====================管理员功能8界面
       ui.adminUI_8();
       cout << "请输入用户id：" << endl;
-      cin >> t; 
+      cin >> t;
       flag = ad.judgeID(t);
       ad.searchAllIn(t);
       cout << "请输入状态：" << endl << "1.健康" << endl << "2.隔离" << endl;

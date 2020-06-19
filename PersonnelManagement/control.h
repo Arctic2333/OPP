@@ -70,15 +70,15 @@ void admin::search() {
   }
 }
 void admin::search(int a) {
-  for (i = li.begin(); i != li.end(); ++i) {
+  for (i = li.begin(); i != li.end(); ++i) {  // 遍历链表查找id为a的住户
     if (i->getID() == a) {
-      i->search();
+      i->search();  // 此处调用的 household的方法
     }
   }
 }
 void admin::searchAll() {
   cout << "当前登记的住户有：" << endl;
-  for (i = li.begin(); i != li.end(); ++i) {
+  for (i = li.begin(); i != li.end(); ++i) {  // 遍历链表，将所有住户输出
     cout << "id: " << i->getID() << "  年龄：" << i->getAge() << "  姓名："
          << i->getName() << "  性别：" << i->getGender() << "  住址："
          << i->getAddress();
@@ -88,11 +88,11 @@ void admin::searchAll() {
       cout << "  状态：隔离" << endl;
     }
   }
-  HouseholdNum = li.size();
+  HouseholdNum = li.size();  // 获取链表中的元素个数即当前住户数
   cout << "当前登记住户共有" << HouseholdNum << "人" << endl;
 }
 void admin::searchAllIn(int a) {
-  for (i = li.begin(); i != li.end(); ++i) {
+  for (i = li.begin(); i != li.end(); ++i) {  // 遍历链表 找到id为a的住户并输出
     if (i->getID() == a) {
       cout << "id: " << i->getID() << "  年龄：" << i->getAge() << "  姓名："
            << i->getName() << "  性别：" << i->getGender() << "  住址："
@@ -101,7 +101,7 @@ void admin::searchAllIn(int a) {
     }
   }
 }
-void admin::searchQuarantine() {
+void admin::searchQuarantine() {  // 遍历链表，将state不为健康的住户信息输出
   QuarantineNum = 0;
   cout << "正在隔离的人员：" << endl;
   for (i = li.begin(); i != li.end(); ++i) {
@@ -114,7 +114,7 @@ void admin::searchQuarantine() {
   }
   cout << "隔离的人数：" << QuarantineNum << endl;
 }
-void household::addSelf(admin& b) {
+void household::addSelf(admin& b) {  // 友元函数，引用，用户自身录入信息
   b.li.push_back(*this);
   b.printUser();
 }
@@ -126,7 +126,7 @@ void admin::deleteHousehold(int a) {
   int flag = 0;
   for (i = li.begin(); i != li.end(); ++i) {
     if (i->getID() == a) {
-      li.erase(i);
+      li.erase(i);  // 从链表中移除
       flag = 1;
       break;
     }
@@ -138,7 +138,8 @@ void admin::deleteHousehold(int a) {
     cout << "删除失败，未找id为" << a << "的住户！！！" << endl;
   }
 }
-void admin::editHousehold(int a, household b) {
+void admin::editHousehold(
+    int a, household b) {  // 将用户a的信息移除并且将信息的加入链表
   int flag = 0;
   for (i = li.begin(); i != li.end(); ++i) {
     if (i->getID() == a) {
@@ -171,7 +172,7 @@ void admin::editHousehold(int a, int s) {
     cout << "编辑失败，未找到住户" << endl;
   }
 }
-int admin::judgeID(int a) {
+int admin::judgeID(int a) {  // 判断是否有id为a的用户，没有直接退出系统
   int flag = 0;
   for (i = li.begin(); i != li.end(); ++i) {
     if (i->getID() == a) {
@@ -186,7 +187,7 @@ int admin::judgeID(int a) {
   }
   return flag;
 }
-int admin::judgeReID(int a){
+int admin::judgeReID(int a) {  // 判断输入的id a 在已有用户中是否存在
   int flag = 0;
   for (i = li.begin(); i != li.end(); ++i) {
     if (i->getID() == a) {
@@ -201,7 +202,7 @@ int admin::judgeReID(int a){
   }
   return flag;
 }
-void admin::printUser() {
+void admin::printUser() {  // 将链表中的用户信息输出到文件中，起到刷新用户信息的作用
   ofstream out;
   out.open("住户信息.txt");
   for (i = li.begin(); i != li.end(); ++i) {
@@ -214,7 +215,7 @@ void admin::printUser() {
   }
   out.close();
 }
-void admin::readUser() {
+void admin::readUser() {  // 软件启动时，将文件中的住户信息加载入程序
   ifstream in;
   int id = 1001, age, state = 1;
   char* name[10000];
