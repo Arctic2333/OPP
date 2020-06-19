@@ -1,6 +1,7 @@
 #ifndef CONTROL_H
 #define CONTROL_H
 #include <cstdlib>
+#include <fstream>
 #include <iostream>
 #include <iterator>
 #include <list>
@@ -50,12 +51,16 @@ class admin : public model {
   void search();       // 查询管理者个人是否需要隔离
   void search(int a);  // 通过id查询某个住户是否需要隔离  多态
   void searchAll();    // 查询全部住户消息
+  void searchAllIn(int a);  // 返回id为a的个人信息
   void searchQuarantine();  // 查询正在隔离的人员信息并且统计
   void addHousehold(household a);          // 添加住户
   void deleteHousehold(int a);             // 删除id为i的住户
   void editHousehold(int a, household b);  // 编辑id为a的住户的信息
   void editHousehold(int a, int s);        // 编辑id为a的住户的状态
   int judgeID(int a);                      // 判断是否有id为a的住户
+  int judgeReID(int a);                    // 判断是否有重复的ID
+  void printUser();  // 将住户信息打印到住户信息.txt中  也用于更新用户信息
+  void readUser();  // 从住户信息.txt中读入住户信息完成初始化
 };
 void admin::search() {
   if (this->getState() == 1) {
@@ -86,6 +91,16 @@ void admin::searchAll() {
   HouseholdNum = li.size();
   cout << "当前登记住户共有" << HouseholdNum << "人" << endl;
 }
+void admin::searchAllIn(int a) {
+  for (i = li.begin(); i != li.end(); ++i) {
+    if (i->getID() == a) {
+      cout << "id: " << i->getID() << "  年龄：" << i->getAge() << "  姓名："
+           << i->getName() << "  性别：" << i->getGender() << "  住址："
+           << i->getAddress() << endl;
+      break;
+    }
+  }
+}
 void admin::searchQuarantine() {
   QuarantineNum = 0;
   cout << "正在隔离的人员：" << endl;
@@ -99,8 +114,14 @@ void admin::searchQuarantine() {
   }
   cout << "隔离的人数：" << QuarantineNum << endl;
 }
-void household::addSelf(admin& b) { b.li.push_back(*this); }
-void admin::addHousehold(household a) { li.push_back(a); }
+void household::addSelf(admin& b) {
+  b.li.push_back(*this);
+  b.printUser();
+}
+void admin::addHousehold(household a) {
+  li.push_back(a);
+  this->printUser();
+}
 void admin::deleteHousehold(int a) {
   int flag = 0;
   for (i = li.begin(); i != li.end(); ++i) {
@@ -111,9 +132,10 @@ void admin::deleteHousehold(int a) {
     }
   }
   if (flag == 1) {
+    this->printUser();
     cout << "删除id为" << a << "的住户成功！" << endl;
   } else {
-    cout << "删除失败，未找id为"<< a <<"的住户！！！" << endl;
+    cout << "删除失败，未找id为" << a << "的住户！！！" << endl;
   }
 }
 void admin::editHousehold(int a, household b) {
@@ -127,6 +149,7 @@ void admin::editHousehold(int a, household b) {
     }
   }
   if (flag == 1) {
+    this->printUser();
     cout << "编辑id为" << a << "的住户成功！" << endl;
   } else {
     cout << "编辑失败，未找到住户" << endl;
@@ -142,6 +165,7 @@ void admin::editHousehold(int a, int s) {
     }
   }
   if (flag == 1) {
+    this->printUser();
     cout << "编辑id为" << a << "的住户状态成功！" << endl;
   } else {
     cout << "编辑失败，未找到住户" << endl;
@@ -155,6 +179,67 @@ int admin::judgeID(int a) {
       break;
     }
   }
+  if (flag == 0) {
+    cout << "ID不存在，任意键退出系统" << endl;
+    system("pause");
+    exit(0);
+  }
   return flag;
+}
+int admin::judgeReID(int a){
+  int flag = 0;
+  for (i = li.begin(); i != li.end(); ++i) {
+    if (i->getID() == a) {
+      flag = 1;
+      break;
+    }
+  }
+  if (flag == 1) {
+    cout << "ID已存在，请退出系统重新输入ID" << endl;
+    system("pause");
+    exit(0);
+  }
+  return flag;
+}
+void admin::printUser() {
+  ofstream out;
+  out.open("住户信息.txt");
+  for (i = li.begin(); i != li.end(); ++i) {
+    out << i->getID() << endl;
+    out << i->getAge() << endl;
+    out << i->getName() << endl;
+    out << i->getGender() << endl;
+    out << i->getAddress() << endl;
+    out << i->getState() << endl;
+  }
+  out.close();
+}
+void admin::readUser() {
+  ifstream in;
+  int id = 1001, age, state = 1;
+  char* name[10000];
+  char* address[10000];
+  char* gender[10000];
+  household* p = new household[10000];  // 栈方式实例化对象数组
+  int j = 0;
+  in.open("住户信息.txt");
+  while (in >> id) {
+    name[j] = (char*)malloc(20);
+    gender[j] = (char*)malloc(8);
+    address[j] = (char*)malloc(200);
+    in >> age;
+    in >> name[j];
+    in >> gender[j];
+    in >> address[j];
+    in >> state;
+    p[j].setID(id);
+    p[j].setAge(age);
+    p[j].setName(name[j]);
+    p[j].setGender(gender[j]);
+    p[j].setAddress(address[j]);
+    p[j].setState(state);
+    li.push_front(p[j]);
+    j++;
+  }
 }
 #endif

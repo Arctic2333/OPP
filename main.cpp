@@ -20,43 +20,32 @@ void readUserInformation() {
   gets(gender);
   gets(address);
 }
+
 int main() {
   admin ad(20, "arctic", "男", "福建省龙岩市永定区", 1);
-  household h1(1000, 18, "anti", "男", "福建莆田", 2);
-  ad.addHousehold(h1);
+  ad.readUser();  // 初始化数据
   ui ui;
   //============================== 初始选择界面
   ui.display();
   cin >> c;
   if (c == 1) {
-    system("cls");
     ui.userUI();
     //============================== 住户选择界面
     cin >> c;
     //============================== ID登入界面
     if (c == 1) {
-      system("cls");
       ui.userUI1();
       cin >> c;
       flag = ad.judgeID(c);
-
-      if (flag == 1) {
-        system("cls");
-        //========================= ID登入成功界面
-        ui.successUserUi();
-        cin >> t;
-        if (t == 1) {
-          ad.search(c);
-          system("pause");
-        }
-      } else {
-        cout << "ID不存在，任意键退出系统" << endl;
+      //========================= ID登入成功界面
+      ui.successUserUi();
+      cin >> t;
+      if (t == 1) {
+        ad.search(c);
         system("pause");
-        exit(0);
       }
     } else {
       //=================录入信息界面
-      system("cls");
       ui.userUI2();
       readUserInformation();
       household h(id, age, name, gender, address, state);
@@ -67,47 +56,71 @@ int main() {
     }
   } else {
     //========================管理员功能选择界面
-    system("cls");
     ui.adminUI();
     cin >> c;
     if (c == 1) {
+      ui.adminUI_1();
       ad.search();
       system("pause");
       exit(0);
     } else if (c == 2) {
+      ui.adminUI_2();
       cout << "请输入住户id：" << endl;
       cin >> t;
+      flag = ad.judgeID(t);
       ad.search(t);
       system("pause");
       exit(0);
     } else if (c == 3) {
+      ui.adminUI_3();
       ad.searchAll();
       system("pause");
       exit(0);
     } else if (c == 4) {
+      ui.adminUI_4();
       ad.searchQuarantine();
       system("pause");
       exit(0);
     } else if (c == 5) {
+      ui.adminUI_5();
       readUserInformation();
+      ad.judgeReID(id);
       household h(id, age, name, gender, address, state);
       ad.addHousehold(h);
       cout << "添加成功了，重启系统,用户即可使用id登入" << endl;
       system("pause");
       exit(0);
     } else if (c == 6) {
+      ui.adminUI_6();
       cout << "请输入用户id：" << endl;
       cin >> t;
+      flag = ad.judgeID(t);
+      ad.searchAllIn(t);
       ad.deleteHousehold(t);
       system("pause");
       exit(0);
     } else if (c == 7) {
+      ui.adminUI_7();
       cout << "请输入用户id：" << endl;
       cin >> t;
+      flag = ad.judgeID(t);
+      ad.searchAllIn(t);
       readUserInformation();
       household h(id, age, name, gender, address, state);
       ad.editHousehold(t, h);
-      ad.searchAll();
+      ad.searchAllIn(t);
+      system("pause");
+      exit(0);
+    } else {
+      ui.adminUI_8();
+      cout << "请输入用户id：" << endl;
+      cin >> t; 
+      flag = ad.judgeID(t);
+      ad.searchAllIn(t);
+      cout << "请输入状态：" << endl << "1.健康" << endl << "2.隔离" << endl;
+      cin >> state;
+      ad.editHousehold(t, state);
+      ad.searchAllIn(t);
       system("pause");
       exit(0);
     }
