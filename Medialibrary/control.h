@@ -11,13 +11,14 @@ using namespace std;
 class book;
 class CD;
 class picture;
-class admin;  // æå‰å£°æ˜ç±» ä»¥ä¾¿åé¢ä½¿ç”¨
+class admin;  // ÌáÇ°ÉùÃ÷Àà ÒÔ±ãºóÃæÊ¹ÓÃ
 class book : public goods {
  private:
-  string publisher;  // å‡ºç‰ˆç¤¾
-  string ISBN;       // ISBNå·
-  int page;          // é¡µæ•°
+  string publisher;  // ³ö°æÉç
+  string ISBN;       // ISBNºÅ
+  int page;          // Ò³Êı
  public:
+  book() {}
   book(int id, string t, string a, string g, string p, string isbn, int pa) {
     this->setID(id);
     this->setTitle(t);
@@ -27,26 +28,29 @@ class book : public goods {
     this->ISBN = isbn;
     this->page = pa;
   }
-  friend class admin;  // å£°æ˜å‹å…ƒç±»
+  friend class admin;  // ÉùÃ÷ÓÑÔªÀà
   list<book> li_book;  // stl
   list<book>::iterator i_book;
-  void add(book a);  // å¤šæ€
-  void Output();     // é‡è½½çˆ¶ç±»çš„Output
+  void add(book a);  // ¶àÌ¬
+  void Output();     // ÖØÔØ¸¸ÀàµÄOutput
   void displayAll();
   int judgeID(int a);
+  void edit(book b, int a);
+  void Delete(int a);
+  int getTotal();
 };
 void book::add(book a) { this->li_book.push_back(a); }
 void book::Output() {
-  cout << "IDï¼š" << this->getID() << "  Titleï¼š" << this->getTitle()
-       << "  Authorï¼š" << this->getAuthor() << "  Gradeï¼š" << this->getGrad()
-       << "  Publisherï¼š" << this->publisher << "  ISBNï¼š" << this->ISBN
-       << "  Pageï¼š" << this->page << endl;
+  cout << "ID£º" << this->getID() << "  Title£º" << this->getTitle()
+       << "  Author£º" << this->getAuthor() << "  Grade£º" << this->getGrad()
+       << "  Publisher£º" << this->publisher << "  ISBN£º" << this->ISBN
+       << "  Page£º" << this->page << endl;
 }
 int book::judgeID(int a) {
   int flag = 0;
   for (this->i_book = this->li_book.begin();
        this->i_book != this->li_book.end(); this->i_book++) {
-    if (this->getID() == a) {
+    if (this->i_book->getID() == a) {
       flag = 1;
       break;
     }
@@ -59,13 +63,33 @@ void book::displayAll() {
     this->i_book->Output();
   }
 }
+void book::edit(book b, int a) {
+  int flag = this->judgeID(a);
+  if (flag == 1) {
+    this->li_book.erase(i_book);
+    this->li_book.push_back(b);
+  } else {
+    cout << "Î´ÕÒµ½IDÎª" << a << "µÄÍ¼Êé" << endl;
+  }
+}
+void book::Delete(int a) {
+  int flag = this->judgeID(a);
+  if (flag == 1) {
+    this->li_book.erase(i_book);
+    cout << "É¾³ıIDÎª" << a << "µÄÍ¼Êé³É¹¦" << endl;
+  } else {
+    cout << "±àºÅ²»´æÔÚ" << endl;
+  }
+}
+int book::getTotal() { return this->li_book.size(); }
 
 class CD : public goods {
  private:
-  string publisher;  // å‡ºå“äºº
-  int year;          // å‡ºå“å¹´
-  int time_len;      // æ—¶é•¿
+  string publisher;  // ³öÆ·ÈË
+  int year;          // ³öÆ·Äê
+  int time_len;      // Ê±³¤
  public:
+  CD() {}
   CD(int id, string t, string a, string g, string p, int y, int time) {
     this->setID(id);
     this->setTitle(t);
@@ -79,22 +103,25 @@ class CD : public goods {
   list<CD> li_CD;
   list<CD>::iterator i_CD;
   void add(CD a);
-  void Output();  // é‡è½½çˆ¶ç±»çš„Output
+  void Output();  // ÖØÔØ¸¸ÀàµÄOutput
   void displayAll();
   int judgeID(int a);
+  void edit(CD c, int a);
+  void Delete(int a);
+  int getTotal();
 };
 void CD::add(CD a) { this->li_CD.push_back(a); }
 void CD::Output() {
-  cout << "IDï¼š" << this->getID() << "  Titleï¼š" << this->getTitle()
-       << "  Authorï¼š" << this->getAuthor() << "  Gradeï¼š" << this->getGrad()
-       << "  Publisherï¼š" << this->publisher << "  Yearï¼š" << this->year
-       << "  Lengthï¼š" << this->time_len << endl;
+  cout << "ID£º" << this->getID() << "  Title£º" << this->getTitle()
+       << "  Author£º" << this->getAuthor() << "  Grade£º" << this->getGrad()
+       << "  Publisher£º" << this->publisher << "  Year£º" << this->year
+       << "  Length£º" << this->time_len << endl;
 }
 int CD::judgeID(int a) {
   int flag = 0;
   for (this->i_CD = this->li_CD.begin(); this->i_CD != this->li_CD.end();
        this->i_CD++) {
-    if (this->getID() == a) {
+    if (this->i_CD->getID() == a) {
       flag = 1;
       break;
     }
@@ -107,13 +134,35 @@ void CD::displayAll() {
     this->i_CD->Output();
   }
 }
+void CD::edit(CD c, int a) {
+  int flag = this->judgeID(a);
+  if (flag == 1) {
+    this->li_CD.erase(i_CD);
+    this->li_CD.push_back(c);
+  } else {
+    cout << "Î´ÕÒµ½IDÎª" << a << "µÄÊÓÆµ¹âÅÌ" << endl;
+  }
+}
+void CD::Delete(int a) {
+  int flag = this->judgeID(a);
+  if (flag == 1) {
+    this->li_CD.erase(i_CD);
+    cout << "É¾³ıIDÎª" << a << "µÄÍ¼Êé³É¹¦" << endl;
+  } else {
+    cout << "±àºÅ²»´æÔÚ" << endl;
+  }
+}
+int CD::getTotal(){
+  return this->li_CD.size();
+}
 
 class picture : public goods {
  private:
-  string country;  // å‡ºå“å›½å®¶
-  int width;       // å®½
-  int length;      // é•¿
+  string country;  // ³öÆ·¹ú¼Ò
+  int width;       // ¿í
+  int length;      // ³¤
  public:
+  picture() {}
   picture(int id, string t, string a, string g, string c, int w, int l) {
     this->setID(id);
     this->setTitle(t);
@@ -127,41 +176,65 @@ class picture : public goods {
   list<picture> li_picture;
   list<picture>::iterator i_picture;
   void add(picture p);
-  void Output();  // é‡è½½çˆ¶ç±»çš„Output
+  void Output();  // ÖØÔØ¸¸ÀàµÄOutput
   void displayAll();
   int judgeID(int a);
+  void edit(picture p, int a);
+  void Delete(int a);
+    int getTotal();
 };
 void picture::add(picture p) { this->li_picture.push_back(p); }
 void picture::Output() {
-  cout << "IDï¼š" << this->getID() << "  Titleï¼š" << this->getTitle()
-       << "  Authorï¼š" << this->getAuthor() << "  Gradeï¼š" << this->getGrad()
-       << "  Published_Countryï¼š" << this->country << "  Lengthï¼š"
-       << this->length << "  widthï¼š" << this->width << endl;
+  cout << "ID£º" << this->getID() << "  Title£º" << this->getTitle()
+       << "  Author£º" << this->getAuthor() << "  Grade£º" << this->getGrad()
+       << "  Published_Country£º" << this->country << "  Length£º"
+       << this->length << "  width£º" << this->width << endl;
 }
 int picture::judgeID(int a) {
   int flag = 0;
   for (this->i_picture = this->li_picture.begin();
        this->i_picture != this->li_picture.end(); this->i_picture++) {
-    if (this->getID() == a) {
+    if (this->i_picture->getID() == a) {
       flag = 1;
       break;
     }
   }
   return flag;
 }
-void picture::displayAll(){
+void picture::displayAll() {
   for (this->i_picture = this->li_picture.begin();
        this->i_picture != this->li_picture.end(); this->i_picture++) {
     this->i_picture->Output();
   }
 }
+void picture::edit(picture p, int a) {
+  int flag = this->judgeID(a);
+  if (flag == 1) {
+    this->li_picture.erase(i_picture);
+    this->li_picture.push_back(p);
+  } else {
+    cout << "Î´ÕÒµ½IDÎª" << a << "µÄÍ¼»­£¡" << endl;
+  }
+}
+void picture::Delete(int a) {
+  int flag = this->judgeID(a);
+  if (flag == 1) {
+    this->li_picture.erase(i_picture);
+    cout << "É¾³ıIDÎª" << a << "µÄÍ¼Êé³É¹¦" << endl;
+  } else {
+    cout << "±àºÅ²»´æÔÚ" << endl;
+  }
+}
+int picture::getTotal(){
+  return this->li_picture.size();
+}
 
 class admin {
  public:
-  void search(string t, book &b, CD &c, picture &p);  // æ ¹æ®æ ‡é¢˜æœç´¢
-  void search(int id, book &b, CD &c, picture &p);    // å¤šæ€ï¼Œå‡½æ•°é‡è½½
-  void search(string s, int a, book &b, CD &c, picture &p);  // æ ¹æ®ç±»åˆ«æœç´¢
-  int RepeatJudgeID(int a, book &b, CD &c, picture &p);  // åˆ¤æ–­æ˜¯å¦æœ‰é‡å¤çš„ID
+  void search(string t, book &b, CD &c, picture &p);  // ¸ù¾İ±êÌâËÑË÷
+  void search(int id, book &b, CD &c, picture &p);    // ¶àÌ¬£¬º¯ÊıÖØÔØ
+  void search(string s, int a, book &b, CD &c, picture &p);  // ¸ù¾İÀà±ğËÑË÷
+  int RepeatJudgeID(int a, book &b, CD &c, picture &p);  // ÅĞ¶ÏÊÇ·ñÓĞÖØ¸´µÄID
   void DisplayAll(book &b, CD &c, picture &p);
 };
 void admin::search(string t, book &b, CD &c, picture &p) {
@@ -191,66 +264,66 @@ void admin::search(string t, book &b, CD &c, picture &p) {
     }
   }
   if (flag == 0) {
-    cout << "è¯¥æ ‡é¢˜ä¸å­˜åœ¨" << endl;
+    cout << "¸Ã±êÌâ²»´æÔÚ" << endl;
   }
 }
 void admin::search(int id, book &b, CD &c, picture &p) {
   int flag = 0;
   flag = b.judgeID(id);
   if (flag == 1) {
-    b.Output();
+    b.i_book->Output();
     return;
   }
   if (flag == 0) {
     flag = c.judgeID(id);
     if (flag == 1) {
-      c.Output();
+      c.i_CD->Output();
       return;
     }
   }
   if (flag == 0) {
     flag = p.judgeID(id);
     if (flag == 1) {
-      p.Output();
+      p.i_picture->Output();
       return;
     }
   }
   if (flag == 0) {
-    cout << "è¯¥ç¼–å·ä¸å­˜åœ¨" << endl;
+    cout << "¸Ã±àºÅ²»´æÔÚ" << endl;
   }
 }
 void admin::search(string s, int a, book &b, CD &c, picture &p) {
-  if (s == "å›¾ä¹¦") {
+  if (s == "Í¼Êé") {
     if (b.li_book.empty() == true) {
-      cout << "è¯¥ç±»åˆ«æ²¡æœ‰ç‰©å“ï¼" << endl;
+      cout << "¸ÃÀà±ğÃ»ÓĞÎïÆ·£¡" << endl;
     } else {
-      cout << "è¯¥ç±»åˆ«å•†å“å¦‚ä¸‹:" << endl;
+      cout << "¸ÃÀà±ğÉÌÆ·ÈçÏÂ:" << endl;
       for (b.i_book = b.li_book.begin(); b.i_book != b.li_book.end();
            b.i_book++) {
         b.i_book->Output();
       }
     }
-  } else if (s == "è§†é¢‘å…‰ç›˜") {
+  } else if (s == "ÊÓÆµ¹âÅÌ") {
     if (c.li_CD.empty() == true) {
-      cout << "è¯¥ç±»åˆ«æ²¡æœ‰ç‰©å“ï¼" << endl;
+      cout << "¸ÃÀà±ğÃ»ÓĞÎïÆ·£¡" << endl;
     } else {
-      cout << "è¯¥ç±»åˆ«å•†å“å¦‚ä¸‹:" << endl;
+      cout << "¸ÃÀà±ğÉÌÆ·ÈçÏÂ:" << endl;
       for (c.i_CD = c.li_CD.begin(); c.i_CD != c.li_CD.end(); c.i_CD++) {
         c.i_CD->Output();
       }
     }
-  } else if (s == "å›¾ç”»") {
+  } else if (s == "Í¼»­") {
     if (p.li_picture.empty() == true) {
-      cout << "è¯¥ç±»åˆ«æ²¡æœ‰ç‰©å“ï¼" << endl;
+      cout << "¸ÃÀà±ğÃ»ÓĞÎïÆ·£¡" << endl;
     } else {
-      cout << "è¯¥ç±»åˆ«å•†å“å¦‚ä¸‹:" << endl;
+      cout << "¸ÃÀà±ğÉÌÆ·ÈçÏÂ:" << endl;
       for (p.i_picture = p.li_picture.begin();
            p.i_picture != p.li_picture.end(); p.i_picture++) {
         p.i_picture->Output();
       }
     }
   } else {
-    cout << "è¯·è¾“å…¥æ­£ç¡®çš„ç±»åˆ«!" << endl;
+    cout << "ÇëÊäÈëÕıÈ·µÄÀà±ğ!" << endl;
   }
 }
 int admin::RepeatJudgeID(int a, book &b, CD &c, picture &p) {
@@ -259,13 +332,13 @@ int admin::RepeatJudgeID(int a, book &b, CD &c, picture &p) {
   flag2 = c.judgeID(a);
   flag3 = p.judgeID(a);
   if (flag1 == 0 && flag2 == 0 && flag3 == 0) {
-    return 1;  // è¯´æ˜æ²¡æœ‰é‡å¤çš„id
+    return 1;  // ËµÃ÷Ã»ÓĞÖØ¸´µÄid
   } else {
     return 0;
   }
 }
-void admin::DisplayAll(book &b, CD &c, picture &p){
-  cout << "å½“å‰åº“ä¸­çš„ç‰©å“æœ‰ï¼š" << endl;
+void admin::DisplayAll(book &b, CD &c, picture &p) {
+  cout << "µ±Ç°¿âÖĞµÄÎïÆ·ÓĞ£º" << endl;
   b.displayAll();
   c.displayAll();
   p.displayAll();

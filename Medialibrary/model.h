@@ -6,10 +6,10 @@ using namespace std;
 
 class goods {
  private:
-  int id;         // ç¼–å·
-  string title;   // æ ‡é¢˜
-  string author;  // ä½œè€…
-  string grade;   // è¯„çº§
+  int id;         // ±àºÅ
+  string title;   // ±êÌâ
+  string author;  // ×÷Õß
+  string grade;   // ÆÀ¼¶
  public:
   int getID() { return this->id; }
   string getTitle() { return this->title; }
@@ -21,8 +21,10 @@ class goods {
   void setGrade(string g) { this->grade = g; }
   void add();
   void Output();
-  void getTotal();
+  int getTotal();
   void displayAll();
+  void edit();
+  void Delete(int a);
   int judgeID(int a);
 };
 #endif
