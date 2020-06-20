@@ -12,6 +12,7 @@ class book;
 class CD;
 class picture;
 class admin;  // 提前声明类 以便后面使用
+
 class book : public goods {
  private:
   string publisher;  // 出版社
@@ -38,6 +39,8 @@ class book : public goods {
   void edit(book b, int a);
   void Delete(int a);
   int getTotal();
+  void Read();
+  void Write();
 };
 void book::add(book a) { this->li_book.push_back(a); }
 void book::Output() {
@@ -82,6 +85,51 @@ void book::Delete(int a) {
   }
 }
 int book::getTotal() { return this->li_book.size(); }
+void book::Read() {
+  ifstream inFile;
+  inFile.open("图书.txt");
+  book *b = new book[300];
+  int id;            // 编号
+  string title;      // 标题
+  string author;     // 作者
+  string grade;      // 评级
+  string publisher;  // 出版社
+  string ISBN;       // ISBN号
+  int page;          // 页数
+  int j = 0;
+  while (inFile >> id) {
+    inFile >> title;
+    inFile >> author;
+    inFile >> grade;
+    inFile >> publisher;
+    inFile >> ISBN;
+    inFile >> page;
+    b[j].setID(id);
+    b[j].setTitle(title);
+    b[j].setAuthor(author);
+    b[j].setGrade(grade);
+    b[j].ISBN = ISBN;
+    b[j].publisher = publisher;
+    b[j].page = page;
+    this->li_book.push_back(b[j]);
+    j++;
+  }
+  inFile.close();
+}
+void book::Write() {
+  ofstream outFile;
+  outFile.open("图书.txt");
+  for (i_book = li_book.begin(); i_book != li_book.end(); ++i_book) {
+    outFile << i_book->getID() << endl;
+    outFile << i_book->getTitle() << endl;
+    outFile << i_book->getAuthor() << endl;
+    outFile << i_book->getGrad() << endl;
+    outFile << i_book->publisher << endl;
+    outFile << i_book->ISBN << endl;
+    outFile << i_book->page << endl;
+  }
+  outFile.close();
+}
 
 class CD : public goods {
  private:
@@ -109,6 +157,8 @@ class CD : public goods {
   void edit(CD c, int a);
   void Delete(int a);
   int getTotal();
+  void Read();
+  void Write();
 };
 void CD::add(CD a) { this->li_CD.push_back(a); }
 void CD::Output() {
@@ -152,8 +202,51 @@ void CD::Delete(int a) {
     cout << "编号不存在" << endl;
   }
 }
-int CD::getTotal(){
-  return this->li_CD.size();
+int CD::getTotal() { return this->li_CD.size(); }
+void CD::Read() {
+  ifstream inFile;
+  inFile.open("视频光盘.txt");
+  CD *c = new CD[300];
+  int id;            // 编号
+  string title;      // 标题
+  string author;     // 作者
+  string grade;      // 评级
+  string publisher;  // 出品人
+  int year;          // 出品年
+  int time_len;      // 时长
+  int j = 0;
+  while (inFile >> id) {
+    inFile >> title;
+    inFile >> author;
+    inFile >> grade;
+    inFile >> publisher;
+    inFile >> year;
+    inFile >> time_len;
+    c[j].setID(id);
+    c[j].setTitle(title);
+    c[j].setAuthor(author);
+    c[j].setGrade(grade);
+    c[j].publisher = publisher;
+    c[j].year = year;
+    c[j].time_len = time_len;
+    this->li_CD.push_back(c[j]);
+    j++;
+  }
+  inFile.close();
+}
+void CD::Write() {
+  ofstream outFile;
+  outFile.open("视频光盘.txt");
+  for (i_CD = li_CD.begin(); i_CD != li_CD.end(); ++i_CD) {
+    outFile << i_CD->getID() << endl;
+    outFile << i_CD->getTitle() << endl;
+    outFile << i_CD->getAuthor() << endl;
+    outFile << i_CD->getGrad() << endl;
+    outFile << i_CD->publisher << endl;
+    outFile << i_CD->year << endl;
+    outFile << i_CD->time_len << endl;
+  }
+  outFile.close();
 }
 
 class picture : public goods {
@@ -181,7 +274,9 @@ class picture : public goods {
   int judgeID(int a);
   void edit(picture p, int a);
   void Delete(int a);
-    int getTotal();
+  int getTotal();
+  void Read();
+  void Write();
 };
 void picture::add(picture p) { this->li_picture.push_back(p); }
 void picture::Output() {
@@ -225,8 +320,52 @@ void picture::Delete(int a) {
     cout << "编号不存在" << endl;
   }
 }
-int picture::getTotal(){
-  return this->li_picture.size();
+int picture::getTotal() { return this->li_picture.size(); }
+void picture::Read() {
+  ifstream inFile;
+  inFile.open("图画.txt");
+  picture *p = new picture[300];
+  int id;          // 编号
+  string title;    // 标题
+  string author;   // 作者
+  string grade;    // 评级
+  string country;  // 出品国家
+  int width;       // 宽
+  int length;      // 长
+  int j = 0;
+  while (inFile >> id) {
+    inFile >> title;
+    inFile >> author;
+    inFile >> grade;
+    inFile >> country;
+    inFile >> width;
+    inFile >> length;
+    p[j].setID(id);
+    p[j].setTitle(title);
+    p[j].setAuthor(author);
+    p[j].setGrade(grade);
+    p[j].country = country;
+    p[j].width = width;
+    p[j].length = length;
+    this->li_picture.push_back(p[j]);
+    j++;
+  }
+  inFile.close();
+}
+void picture::Write() {
+  ofstream outFile;
+  outFile.open("图画.txt");
+  for (i_picture = li_picture.begin(); i_picture != li_picture.end();
+       ++i_picture) {
+    outFile << i_picture->getID() << endl;
+    outFile << i_picture->getTitle() << endl;
+    outFile << i_picture->getAuthor() << endl;
+    outFile << i_picture->getGrad() << endl;
+    outFile << i_picture->country << endl;
+    outFile << i_picture->width << endl;
+    outFile << i_picture->length << endl;
+  }
+  outFile.close();
 }
 
 class admin {

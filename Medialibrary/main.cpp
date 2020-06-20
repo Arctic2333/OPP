@@ -8,18 +8,10 @@ int main() {
   CD cd_root;
   picture picture_root;
   admin ad;
-  book b1(100, "安徒生", "anti", "ch", "chiled", "9-189-067", 50);
-  book b2(101, "geling", "geli", "ch", "jixie", "9-189-067", 50);
-  book b3(102, "xiaowang", "xiao", "ch", "jixie", "9-189-067", 50);
-  book_root.add(b1);
-  book_root.add(b2);
-  book_root.add(b3);
-  book_root.displayAll();
-  ad.DisplayAll(book_root,cd_root,picture_root);
-  ad.search(102,book_root,cd_root,picture_root);
-  ad.search("安徒生",book_root,cd_root,picture_root);
-  ad.search("图书",1,book_root,cd_root,picture_root);
-  book_root.Delete(100);
-  ad.DisplayAll(book_root,cd_root,picture_root);
+  book b(102, "JAVA", "Tim", "成人", "高校出版社", "9-189-067", 600);
+  book_root.Read();
+  book_root.add(b);
+  ad.DisplayAll(book_root, cd_root, picture_root);
+  book_root.Write();
   return 0;
 }

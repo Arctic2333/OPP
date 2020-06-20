@@ -239,7 +239,7 @@ void admin::readUser() {  // 软件启动时，将文件中的住户信息加载入程序
     p[j].setGender(gender[j]);
     p[j].setAddress(address[j]);
     p[j].setState(state);
-    li.push_front(p[j]);
+    li.push_back(p[j]);
     j++;
   }
 }

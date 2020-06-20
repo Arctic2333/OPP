@@ -26,5 +26,7 @@ class goods {
   void edit();
   void Delete(int a);
   int judgeID(int a);
+  void Read();
+  void Write();
 };
 #endif
