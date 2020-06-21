@@ -1,5 +1,6 @@
 #ifndef CONTROL_H
 #define CONTROL_H
+#include <cstdlib>
 #include <fstream>
 #include <iostream>
 #include <iterator>
@@ -42,7 +43,10 @@ class book : public goods {
   void Read();
   void Write();
 };
-void book::add(book a) { this->li_book.push_back(a); }
+void book::add(book a) {
+  this->li_book.push_back(a);
+  this->Write();
+}
 void book::Output() {
   cout << "ID：" << this->getID() << "  Title：" << this->getTitle()
        << "  Author：" << this->getAuthor() << "  Grade：" << this->getGrad()
@@ -73,7 +77,10 @@ void book::edit(book b, int a) {
     this->li_book.push_back(b);
   } else {
     cout << "未找到ID为" << a << "的图书" << endl;
+    system("pause");
+    exit(0);
   }
+  this->Write();
 }
 void book::Delete(int a) {
   int flag = this->judgeID(a);
@@ -82,7 +89,10 @@ void book::Delete(int a) {
     cout << "删除ID为" << a << "的图书成功" << endl;
   } else {
     cout << "编号不存在" << endl;
+    system("pause");
+    exit(0);
   }
+  this->Write();
 }
 int book::getTotal() { return this->li_book.size(); }
 void book::Read() {
@@ -160,7 +170,10 @@ class CD : public goods {
   void Read();
   void Write();
 };
-void CD::add(CD a) { this->li_CD.push_back(a); }
+void CD::add(CD a) {
+  this->li_CD.push_back(a);
+  this->Write();
+}
 void CD::Output() {
   cout << "ID：" << this->getID() << "  Title：" << this->getTitle()
        << "  Author：" << this->getAuthor() << "  Grade：" << this->getGrad()
@@ -191,7 +204,10 @@ void CD::edit(CD c, int a) {
     this->li_CD.push_back(c);
   } else {
     cout << "未找到ID为" << a << "的视频光盘" << endl;
+    system("pause");
+    exit(0);
   }
+  this->Write();
 }
 void CD::Delete(int a) {
   int flag = this->judgeID(a);
@@ -200,7 +216,10 @@ void CD::Delete(int a) {
     cout << "删除ID为" << a << "的图书成功" << endl;
   } else {
     cout << "编号不存在" << endl;
+    system("pause");
+    exit(0);
   }
+  this->Write();
 }
 int CD::getTotal() { return this->li_CD.size(); }
 void CD::Read() {
@@ -278,7 +297,10 @@ class picture : public goods {
   void Read();
   void Write();
 };
-void picture::add(picture p) { this->li_picture.push_back(p); }
+void picture::add(picture p) {
+  this->li_picture.push_back(p);
+  this->Write();
+}
 void picture::Output() {
   cout << "ID：" << this->getID() << "  Title：" << this->getTitle()
        << "  Author：" << this->getAuthor() << "  Grade：" << this->getGrad()
@@ -309,7 +331,10 @@ void picture::edit(picture p, int a) {
     this->li_picture.push_back(p);
   } else {
     cout << "未找到ID为" << a << "的图画！" << endl;
+    system("pause");
+    exit(0);
   }
+  this->Write();
 }
 void picture::Delete(int a) {
   int flag = this->judgeID(a);
@@ -318,7 +343,10 @@ void picture::Delete(int a) {
     cout << "删除ID为" << a << "的图书成功" << endl;
   } else {
     cout << "编号不存在" << endl;
+    system("pause");
+    exit(0);
   }
+  this->Write();
 }
 int picture::getTotal() { return this->li_picture.size(); }
 void picture::Read() {
@@ -375,6 +403,7 @@ class admin {
   void search(string s, int a, book &b, CD &c, picture &p);  // 根据类别搜索
   int RepeatJudgeID(int a, book &b, CD &c, picture &p);  // 判断是否有重复的ID
   void DisplayAll(book &b, CD &c, picture &p);
+  void getTotal(book &b, CD &c, picture &p);
 };
 void admin::search(string t, book &b, CD &c, picture &p) {
   int flag = 0;
@@ -403,7 +432,7 @@ void admin::search(string t, book &b, CD &c, picture &p) {
     }
   }
   if (flag == 0) {
-    cout << "该标题不存在" << endl;
+    cout << "该标题不存在,即将退出系统" << endl;
   }
 }
 void admin::search(int id, book &b, CD &c, picture &p) {
@@ -428,13 +457,13 @@ void admin::search(int id, book &b, CD &c, picture &p) {
     }
   }
   if (flag == 0) {
-    cout << "该编号不存在" << endl;
+    cout << "该编号不存在，即将退出系统" << endl;
   }
 }
 void admin::search(string s, int a, book &b, CD &c, picture &p) {
   if (s == "图书") {
     if (b.li_book.empty() == true) {
-      cout << "该类别没有物品！" << endl;
+      cout << "该类别没有物品！即将退出系统" << endl;
     } else {
       cout << "该类别商品如下:" << endl;
       for (b.i_book = b.li_book.begin(); b.i_book != b.li_book.end();
@@ -444,7 +473,7 @@ void admin::search(string s, int a, book &b, CD &c, picture &p) {
     }
   } else if (s == "视频光盘") {
     if (c.li_CD.empty() == true) {
-      cout << "该类别没有物品！" << endl;
+      cout << "该类别没有物品！即将退出系统" << endl;
     } else {
       cout << "该类别商品如下:" << endl;
       for (c.i_CD = c.li_CD.begin(); c.i_CD != c.li_CD.end(); c.i_CD++) {
@@ -453,7 +482,7 @@ void admin::search(string s, int a, book &b, CD &c, picture &p) {
     }
   } else if (s == "图画") {
     if (p.li_picture.empty() == true) {
-      cout << "该类别没有物品！" << endl;
+      cout << "该类别没有物品！即将退出系统" << endl;
     } else {
       cout << "该类别商品如下:" << endl;
       for (p.i_picture = p.li_picture.begin();
@@ -462,7 +491,7 @@ void admin::search(string s, int a, book &b, CD &c, picture &p) {
       }
     }
   } else {
-    cout << "请输入正确的类别!" << endl;
+    cout << "请输入正确的类别!即将退出系统" << endl;
   }
 }
 int admin::RepeatJudgeID(int a, book &b, CD &c, picture &p) {
@@ -477,9 +506,18 @@ int admin::RepeatJudgeID(int a, book &b, CD &c, picture &p) {
   }
 }
 void admin::DisplayAll(book &b, CD &c, picture &p) {
-  cout << "当前库中的物品有：" << endl;
+  cout << "当前库中的图书：" << endl;
   b.displayAll();
+  cout << "当前库中的视频光盘：" << endl;
   c.displayAll();
+  cout << "当前库中的图画：" << endl;
   p.displayAll();
+}
+void admin::getTotal(book &b, CD &c, picture &p) {
+  cout << "当前物品库中图书总数：" << b.getTotal() << endl;
+  cout << "当前物品库中视频光盘总数：" << c.getTotal() << endl;
+  cout << "当前物品库中图画总数：" << p.getTotal() << endl;
+  cout << "当前物品库中总数：" << b.getTotal() + c.getTotal() + p.getTotal()
+       << endl;
 }
 #endif

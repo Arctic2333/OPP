@@ -1,10 +1,8 @@
 #ifndef UI_H
 #define UI_H
-#include <iostream>
 #include <cstdlib>
-void clear(){
-     system("cls");
-}
+#include <iostream>
+void clear() { system("cls"); }
 using namespace std;
 class ui {
  public:
@@ -19,12 +17,14 @@ class ui {
          << endl;
     cout << "|                2.管理员                                  "
          << endl;
+    cout << "| 温馨提示：系统中操作不可回退上一层，错误操作请重开程序     "
+         << endl;
     cout << "+--------------------------------------------------------+"
          << endl;
     cout << "请输入数字：" << endl;
   }
   void userUI() {
-       clear();
+    clear();
     cout << "+--------------------------------------------------------+"
          << endl;
     cout << "|              1.请输入ID登入系统                              "
@@ -36,7 +36,7 @@ class ui {
     cout << "请输入数字：" << endl;
   }
   void userUI1() {
-       clear();
+    clear();
     cout << "+--------------------------------------------------------+"
          << endl;
     cout << "|              请输入ID登入系统                              "
@@ -46,7 +46,7 @@ class ui {
     cout << "请输入ID：" << endl;
   }
   void userUI2() {
-       clear();
+    clear();
     cout << "+--------------------------------------------------------+"
          << endl;
     cout << "|              请输入个人基本信息                              "
@@ -55,7 +55,7 @@ class ui {
          << endl;
   }
   void successUserUi() {
-       clear();
+    clear();
     cout << "+--------------------------------------------------------+"
          << endl;
     cout << "|              请输入数字选择功能                             "
@@ -67,7 +67,7 @@ class ui {
     cout << "请输入数字：" << endl;
   }
   void adminUI() {
-       clear();
+    clear();
     cout << "+--------------------------------------------------------+"
          << endl;
     cout << "|              1.查询自己是否处于隔离状态                      "
@@ -91,7 +91,7 @@ class ui {
     cout << "请输入数字：" << endl;
   }
   void adminUI_1() {
-       clear();
+    clear();
     cout << "+--------------------------------------------------------+"
          << endl;
     cout << "|                   查看你的健康状态                        "
@@ -100,7 +100,7 @@ class ui {
          << endl;
   }
   void adminUI_2() {
-       clear();
+    clear();
     cout << "+--------------------------------------------------------+"
          << endl;
     cout << "|                  查看住户的健康状态                         "
@@ -109,7 +109,7 @@ class ui {
          << endl;
   }
   void adminUI_3() {
-       clear();
+    clear();
     cout << "+--------------------------------------------------------+"
          << endl;
     cout << "|                  查看所有住户信息                        "
@@ -118,7 +118,7 @@ class ui {
          << endl;
   }
   void adminUI_4() {
-       clear();
+    clear();
     cout << "+--------------------------------------------------------+"
          << endl;
     cout << "|                  查看正在隔离住户信息                      "
@@ -127,7 +127,7 @@ class ui {
          << endl;
   }
   void adminUI_5() {
-       clear();
+    clear();
     cout << "+--------------------------------------------------------+"
          << endl;
     cout << "|                      添加住户                             "
@@ -136,7 +136,7 @@ class ui {
          << endl;
   }
   void adminUI_6() {
-       clear();
+    clear();
     cout << "+--------------------------------------------------------+"
          << endl;
     cout << "|                      删除住户                             "
@@ -145,7 +145,7 @@ class ui {
          << endl;
   }
   void adminUI_7() {
-       clear();
+    clear();
     cout << "+--------------------------------------------------------+"
          << endl;
     cout << "|                   编辑住户个人所有信息                      "
@@ -153,8 +153,8 @@ class ui {
     cout << "+--------------------------------------------------------+"
          << endl;
   }
-   void adminUI_8() {
-        clear();
+  void adminUI_8() {
+    clear();
     cout << "+--------------------------------------------------------+"
          << endl;
     cout << "|                   编辑住户状态                             "
